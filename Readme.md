@@ -1,0 +1,1 @@
+This project uses Java Azul Zulu 21.0.10

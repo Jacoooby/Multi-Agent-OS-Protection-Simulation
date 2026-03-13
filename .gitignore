@@ -1,8 +1,8 @@
-# Ignore compiled output
+# Output
 out/
 
-# Ignore everything in .idea
-.idea/*
+# IntelliJ
+.idea/
 
-# Except keep module file
-!.idea/Multi-Agent-OS-Protection-Simulation.iml
+# Module files
+*.iml
