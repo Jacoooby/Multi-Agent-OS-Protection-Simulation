@@ -73,23 +73,20 @@ public class AgentThread extends Thread {
 
         // domain switch request
         else {
-            int targetDomain = (x - numFiles) + 1;
+            int targetDomain = getRandomOtherDomain();
 
-            if (targetDomain >= 1 && targetDomain <= numDomains && targetDomain != currentDomain) {
-                System.out.println("Agent " + agentId + " in D" + currentDomain + " requests switch to D" + targetDomain);
+            System.out.println("Agent " + agentId + " in D" + currentDomain +
+                    " requests switch to D" + targetDomain);
 
-                boolean allowed = arbitrator.canSwitch(currentDomain, targetDomain);
+            boolean allowed = arbitrator.canSwitch(currentDomain, targetDomain);
 
-                if (allowed) {
-                    System.out.println("Arbitrator decision for Agent " + agentId + ": GRANTED");
-                    currentDomain = targetDomain;
-                    System.out.println("Agent " + agentId + " switched to D" + currentDomain);
-                } else {
-                    System.out.println("Arbitrator decision for Agent " + agentId + ": DENIED");
-                }
+            if (allowed) {
+                System.out.println("Arbitrator decision for Agent " + agentId + ": GRANTED");
+                currentDomain = targetDomain;
+                System.out.println("Agent " + agentId + " switched to D" + currentDomain);
             } else {
-                System.out.println("Agent " + agentId + " attempted invalid switch.");
                 System.out.println("Arbitrator decision for Agent " + agentId + ": DENIED");
+                System.out.println("Agent " + agentId + " remains in D" + currentDomain);
             }
         }
     }
@@ -104,5 +101,15 @@ public class AgentThread extends Thread {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    private int getRandomOtherDomain() {
+        int targetDomain = rand.nextInt(numDomains) + 1;
+
+        while (targetDomain == currentDomain) {
+            targetDomain = rand.nextInt(numDomains) + 1;
+        }
+
+        return targetDomain;
     }
 }
