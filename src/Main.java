@@ -46,7 +46,8 @@ public class Main {
 
 
     public static void startAccessMatrix() {
-        return;
+        AccessMatrix task1 = new AccessMatrix();
+        task1.runTask();
     }
 
     public static void startObjectList() {
