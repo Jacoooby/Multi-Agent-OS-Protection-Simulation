@@ -1,8 +1,5 @@
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         String task;
 
         if (args.length != 2) {
@@ -57,6 +54,7 @@ public class Main {
     }
 
     public static void startDomainList() {
-        return;
+        DomainList task3 = new DomainList();
+        task3.runSimulation();
     }
 }
