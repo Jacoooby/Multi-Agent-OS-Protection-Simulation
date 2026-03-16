@@ -1,6 +1,6 @@
 import java.util.concurrent.locks.ReentrantLock;
 
-// File object used by agents in the simulation. Each file has content that can be read or written and a lock
+// File object used by agents in the task. Each file has content that can be read or written and a lock
 // for synchronization.
 public class FileObject {
     private int id;

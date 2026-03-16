@@ -55,6 +55,6 @@ public class Main {
 
     public static void startDomainList() {
         DomainList task3 = new DomainList();
-        task3.runSimulation();
+        task3.runTask();
     }
 }
