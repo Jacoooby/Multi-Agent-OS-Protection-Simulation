@@ -51,7 +51,8 @@ public class Main {
     }
 
     public static void startObjectList() {
-        return;
+        ObjectList task2 = new ObjectList();
+        task2.runTask();
     }
 
     public static void startDomainList() {
