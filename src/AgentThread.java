@@ -30,6 +30,7 @@ public class AgentThread extends Thread {
             makeRequest();
             agentYield();
         }
+        System.out.println("Agent " + agentId + " has completed an operation.");
     }
 
     // randomly perform either read/write request or a domain switch request
@@ -73,7 +74,14 @@ public class AgentThread extends Thread {
 
         // domain switch request
         else {
-            int targetDomain = getRandomOtherDomain();
+            int domainOffset = x - numFiles;
+            int targetDomain = domainOffset + 1;
+
+            // skip the current domain
+            if (targetDomain >= currentDomain) {
+                targetDomain++;
+            }
+
 
             System.out.println("Agent " + agentId + " in D" + currentDomain +
                     " requests switch to D" + targetDomain);
@@ -101,15 +109,5 @@ public class AgentThread extends Thread {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-    }
-
-    private int getRandomOtherDomain() {
-        int targetDomain = rand.nextInt(numDomains) + 1;
-
-        while (targetDomain == currentDomain) {
-            targetDomain = rand.nextInt(numDomains) + 1;
-        }
-
-        return targetDomain;
     }
 }
