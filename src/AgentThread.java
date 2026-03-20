@@ -1,5 +1,7 @@
 import java.util.Random;
 
+//Begin code changes by Jacob Berard
+
 // AgentThread class where each agent thread will make 5 random requests.
 public class AgentThread extends Thread {
     private int agentId;
@@ -111,3 +113,5 @@ public class AgentThread extends Thread {
         }
     }
 }
+
+//End code changes by Jacob Berard

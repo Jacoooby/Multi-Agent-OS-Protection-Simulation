@@ -1,3 +1,5 @@
+// Begin code changes by Jacob Berard
+
 public class Main {
     public static void main(String[] args) {
         String task;
@@ -44,19 +46,26 @@ public class Main {
         }
     }
 
+// End code changes by Jacob Berard
 
+    // Begin code changes by Samuel Kyjaci
     public static void startAccessMatrix() {
         AccessMatrix task1 = new AccessMatrix();
         task1.runTask();
     }
+    // End code changes by Samuel Kyjaci
 
+    // Begin code changes by Aden Hunter
     public static void startObjectList() {
         ObjectList task2 = new ObjectList();
         task2.runTask();
     }
+    // End code changes by Aden Hunter
 
+    // Begin code changes by Jacob Berard
     public static void startDomainList() {
         DomainList task3 = new DomainList();
         task3.runTask();
     }
+    // End code changes by Jacob Berard
 }

@@ -1,5 +1,6 @@
 import java.util.*;
 
+// Begin code changes by Aden Hunter
 public class ObjectList implements Arbitrator {
     private int numDomains;
     private int numFiles;
@@ -148,4 +149,6 @@ public class ObjectList implements Arbitrator {
         Map<Integer, Boolean> list = domainAccessLists.get(targetDomain);
         return Boolean.TRUE.equals(list.get(currentDomain));
     }
+
+    // End code changes by Aden Hunter
 }

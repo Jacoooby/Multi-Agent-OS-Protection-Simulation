@@ -1,5 +1,7 @@
 import java.util.concurrent.locks.ReentrantLock;
 
+// Begin code changes by Jacob Berard
+
 // File object used by agents in the task. Each file has content that can be read or written and a lock
 // for synchronization.
 public class FileObject {
@@ -39,4 +41,6 @@ public class FileObject {
             lock.unlock();
         }
     }
+
+    // End code changes by Jacob Berard
 }
