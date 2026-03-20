@@ -57,7 +57,7 @@ public class DomainList implements Arbitrator {
                 // random int used to determine a permission to give
                 int permission = rand.nextInt(4);
 
-                // at domain i, give a random permission for each file
+                // at domain d, give a random permission for each file
                 if (permission == 0) {
                     fileMap.put(f, "-");
                 } else if (permission == 1) {
