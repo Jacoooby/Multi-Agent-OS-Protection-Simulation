@@ -1,6 +1,6 @@
 import java.util.*;
 
-// Begin code changes by Aden Hunter
+// Begin code changes by Hunter Aden
 public class ObjectList implements Arbitrator {
     private int numDomains;
     private int numFiles;
