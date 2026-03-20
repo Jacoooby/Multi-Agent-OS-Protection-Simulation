@@ -1,5 +1,7 @@
 import java.util.Random;
 
+//Begin code changes by Samuel Kyjaci
+
 public class AccessMatrix implements Arbitrator {
     private int numDomains;
     private int numFiles;
@@ -142,3 +144,5 @@ public class AccessMatrix implements Arbitrator {
         return accessMatrix[currentDomain][column].equals("allow");
     }
 }
+
+//End code changes by Samuel Kyjaci

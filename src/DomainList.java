@@ -1,5 +1,7 @@
 import java.util.Random;
 
+//Begin code changes by Jacob Berard
+
 public class DomainList implements Arbitrator {
     // N = number of domains
     private int numDomains;
@@ -137,3 +139,4 @@ public class DomainList implements Arbitrator {
         return domainSwitches[currentDomain][targetDomain];
     }
 }
+//End code changes by Jacob Berard
