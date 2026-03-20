@@ -35,7 +35,7 @@ public class FileObject {
     public void writeFile(int agentId, int domainId) {
         lock.lock();
         try {
-            content = content +  " [written by A" + agentId + "]";
+            content = content +  " [written by Agent " + agentId + "]";
             System.out.println("Agent " + agentId + " in D" + domainId + " WRITES F" + id + " -> " + content);
         } finally {
             lock.unlock();

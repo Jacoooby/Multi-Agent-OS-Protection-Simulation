@@ -52,7 +52,7 @@ public class AgentThread extends Thread {
                 boolean allowed = arbitrator.canRead(currentDomain, fileId);
 
                 if (allowed) {
-                    System.out.println("Arbitrator decision for Agent " + agentId + ": GRANTED");
+                    System.out.println("Arbitrator decision for Agent " + agentId + ": ALLOWED");
                     files[fileId].readFile(agentId, currentDomain);
                 } else {
                     System.out.println("Arbitrator decision for Agent " + agentId + ": DENIED");
@@ -66,7 +66,7 @@ public class AgentThread extends Thread {
                 boolean allowed = arbitrator.canWrite(currentDomain, fileId);
 
                 if (allowed) {
-                    System.out.println("Arbitrator decision for Agent " + agentId + ": GRANTED");
+                    System.out.println("Arbitrator decision for Agent " + agentId + ": ALLOWED");
                     files[fileId].writeFile(agentId, currentDomain);
                 } else {
                     System.out.println("Arbitrator decision for Agent " + agentId + ": DENIED");
@@ -91,7 +91,7 @@ public class AgentThread extends Thread {
             boolean allowed = arbitrator.canSwitch(currentDomain, targetDomain);
 
             if (allowed) {
-                System.out.println("Arbitrator decision for Agent " + agentId + ": GRANTED");
+                System.out.println("Arbitrator decision for Agent " + agentId + ": ALLOWED");
                 currentDomain = targetDomain;
                 System.out.println("Agent " + agentId + " switched to D" + currentDomain);
             } else {
