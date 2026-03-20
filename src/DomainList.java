@@ -1,4 +1,4 @@
-import java.util.Random;
+import java.util.*;
 
 //Begin code changes by Jacob Berard
 
@@ -9,11 +9,11 @@ public class DomainList implements Arbitrator {
     private int numFiles;
     private FileObject[] files;
 
-    // filePermissions[i][j] stores the permission for domain i on file j
-    private String[][] filePermissions;
+    // list for file access
+    private List<Map<Integer, String>> fileDomainLists;
+    // list for domain switching access
+    private List<Map<Integer, Boolean>> domainSwitches;
 
-    // domainSwitches[i][j] is true if domain i can switch to domain j
-    private boolean[][] domainSwitches;
 
     public void runTask() {
         Random rand = new Random();
@@ -42,35 +42,45 @@ public class DomainList implements Arbitrator {
 
     // builds the capability lists for each domain
     private void buildCapabilityLists(Random rand) {
-        filePermissions = new String[numDomains + 1][numFiles + 1];
-        domainSwitches = new boolean[numDomains + 1][numDomains + 1];
+        // Initialize lists
+        fileDomainLists = new ArrayList<>();
+        domainSwitches = new ArrayList<>();
+        fileDomainLists.add(null);
+        domainSwitches.add(null);
 
-        for (int i = 1; i <= numDomains; i++) {
-            for (int j = 1; j <= numFiles; j++) {
+        // apply random permissions at each domain for each file
+        for (int d = 1; d <= numDomains; d++) {
+            Map<Integer, String> fileMap = new HashMap<>();
+            Map<Integer, Boolean> domainMap = new HashMap<>();
+
+            for (int f = 1; f <= numFiles; f++) {
                 // random int used to determine a permission to give
                 int permission = rand.nextInt(4);
 
                 // at domain i, give a random permission for each file
                 if (permission == 0) {
-                    filePermissions[i][j] = "-";
+                    fileMap.put(f, "-");
                 } else if (permission == 1) {
-                    filePermissions[i][j] = "R";
+                    fileMap.put(f, "R");
                 } else if (permission == 2) {
-                    filePermissions[i][j] = "W";
+                    fileMap.put(f, "W");
                 } else {
-                    filePermissions[i][j] = "RW";
+                    fileMap.put(f, "RW");
                 }
             }
 
-            // randomly decide which domains this domain can switch to
+            // randomly decide which domains the current domain can switch to
             for (int target = 1; target <= numDomains; target++) {
-                if (i == target) {
+                if (d == target) {
                     // ensures domain cannot switch to itself
-                    domainSwitches[i][target] = false;
+                    domainMap.put(target, false);
                 } else {
-                    domainSwitches[i][target] = rand.nextBoolean();
+                    domainMap.put(target, rand.nextBoolean());
                 }
             }
+            // add file permissions and domain switch permissions to the lists
+            fileDomainLists.add(fileMap);
+            domainSwitches.add(domainMap);
         }
     }
 
@@ -79,22 +89,28 @@ public class DomainList implements Arbitrator {
         System.out.println();
         System.out.println("Capability List for Domains:");
 
-        for (int i = 1; i <= numDomains; i++) {
-            System.out.println("\nD" + i + ":");
+        for (int d = 1; d <= numDomains; d++) {
+            System.out.println("\nD" + d + ":");
 
-            // prints file permissions for domain i
-            for (int j = 1; j <= numFiles; j++) {
-                if (!filePermissions[i][j].equals("-")) {
-                    System.out.println(" F" + j + " -> " + filePermissions[i][j]);
+            Map<Integer, String> fileMap = fileDomainLists.get(d);
+            Map<Integer, Boolean> domainMap = domainSwitches.get(d);
+
+            // print file permissions for domain
+            for (int f = 1; f <= numFiles; f++) {
+                String permission = fileMap.get(f);
+                if (permission != null && !permission.equals("-")) {
+                    System.out.print(" F" + f + "-> " + permission + "  ");
                 }
             }
 
-            // prints domain switch permissions for domain i
-            for (int target = 1; target <= numDomains; target++) {
-                if (domainSwitches[i][target]) {
-                    System.out.println(" D" + target + " -> allow");
+            // print domain switch permissions for domain
+            for (int i = 1; i <= numDomains; i++) {
+                Boolean canSwitch = domainMap.get(i);
+                if (canSwitch != null && canSwitch) {
+                    System.out.print(" D" + i + " -> allow" + "  ");
                 }
             }
+            System.out.println();
         }
         System.out.println();
     }
@@ -122,21 +138,22 @@ public class DomainList implements Arbitrator {
     // returns true if the domain has read or read/write permission on a file
     @Override
     public boolean canRead(int domain, int file) {
-        return filePermissions[domain][file].equals("R") ||
-                filePermissions[domain][file].equals("RW");
+        String permission = fileDomainLists.get(domain).get(file);
+        return permission.equals("R") || permission.equals("RW");
     }
 
     // returns true if the domain has write or read/write permission on a file
     @Override
     public boolean canWrite(int domain, int file) {
-        return filePermissions[domain][file].equals("W") ||
-                filePermissions[domain][file].equals("RW");
+        String permission = fileDomainLists.get(domain).get(file);
+        return permission.equals("W") || permission.equals("RW");
     }
 
     // returns true if the current domain can switch to the target domain
     @Override
     public boolean canSwitch(int currentDomain, int targetDomain) {
-        return domainSwitches[currentDomain][targetDomain];
+        Boolean canSwitch = domainSwitches.get(currentDomain).get(targetDomain);
+        return Boolean.TRUE.equals(canSwitch);
     }
 }
 //End code changes by Jacob Berard
